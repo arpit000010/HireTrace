@@ -254,7 +254,7 @@ const RegisterPage = () => {
               id="register-submit"
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm text-white
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm
                 bg-[var(--text-primary)] text-[var(--bg-primary)]
                 hover:bg-zinc-200 hover:shadow-lg hover:shadow-white/10
                 disabled:opacity-50 disabled:cursor-not-allowed
