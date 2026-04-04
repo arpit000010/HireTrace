@@ -49,8 +49,8 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)] px-4">
       {/* Background glow */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-20%] left-[20%] w-[500px] h-[500px] bg-[var(--indigo)] opacity-[0.06] rounded-full blur-[100px]" />
-        <div className="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-[var(--cyan)] opacity-[0.04] rounded-full blur-[100px]" />
+        <div className="absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-indigo-500 opacity-10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] bg-cyan-500 opacity-10 rounded-full blur-[120px]" />
       </div>
 
       <div className="relative w-full max-w-md">
@@ -73,7 +73,7 @@ const LoginPage = () => {
         </div>
 
         {/* Card */}
-        <div className="bg-[var(--bg-card)] border border-[var(--border)] rounded-2xl p-8 shadow-2xl shadow-black/40">
+        <div className="bg-[var(--bg-card)]/80 backdrop-blur-xl border border-[var(--border)] rounded-3xl p-8 shadow-[0_8px_40px_rgb(0,0,0,0.5)] ring-1 ring-white/5">
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
             {/* Email */}
             <div>
@@ -91,8 +91,8 @@ const LoginPage = () => {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className={`w-full px-4 py-2.5 bg-[var(--bg-primary)] border rounded-xl text-[var(--text-primary)] placeholder-[var(--text-secondary)]/50 text-sm outline-none transition-all duration-200
-                  focus:border-[var(--indigo)] focus:ring-2 focus:ring-[var(--indigo)]/20
+                className={`w-full px-4 py-2.5 bg-zinc-900/50 border rounded-xl text-[var(--text-primary)] placeholder-[var(--text-secondary)]/50 text-sm outline-none transition-all duration-200
+                  focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 shadow-inner
                   ${errors.email ? "border-[var(--red)]" : "border-[var(--border)]"}`}
               />
               {errors.email && (
@@ -117,8 +117,8 @@ const LoginPage = () => {
                   value={form.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className={`w-full px-4 py-2.5 pr-11 bg-[var(--bg-primary)] border rounded-xl text-[var(--text-primary)] placeholder-[var(--text-secondary)]/50 text-sm outline-none transition-all duration-200
-                    focus:border-[var(--indigo)] focus:ring-2 focus:ring-[var(--indigo)]/20
+                  className={`w-full px-4 py-2.5 pr-11 bg-zinc-900/50 border rounded-xl text-[var(--text-primary)] placeholder-[var(--text-secondary)]/50 text-sm outline-none transition-all duration-200
+                    focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 shadow-inner
                     ${errors.password ? "border-[var(--red)]" : "border-[var(--border)]"}`}
                 />
                 <button
@@ -139,11 +139,11 @@ const LoginPage = () => {
               id="login-submit"
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl font-semibold text-sm text-white
-                bg-gradient-to-r from-[var(--indigo)] to-[#4f46e5]
-                hover:from-[var(--indigo-light)] hover:to-[var(--indigo)]
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm text-white
+                bg-[var(--text-primary)] text-[var(--bg-primary)]
+                hover:bg-zinc-200 hover:shadow-lg hover:shadow-white/10
                 disabled:opacity-50 disabled:cursor-not-allowed
-                transition-all duration-200 shadow-lg shadow-[var(--indigo)]/25 mt-2"
+                transition-all duration-200 mt-4"
             >
               {loading ? (
                 <Loader2 size={16} className="animate-spin" />

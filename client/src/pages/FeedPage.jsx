@@ -14,11 +14,11 @@ import {
 } from "../utils/constants.js";
 
 const EmptyState = ({ message }) => (
-  <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
-    <div className="w-16 h-16 rounded-full bg-[var(--bg-card)] border border-[var(--border)] flex items-center justify-center mb-4 text-2xl">
+  <div className="col-span-full flex flex-col items-center justify-center py-24 text-center">
+    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-[var(--border)] shadow-[inset_0_1px_rgba(255,255,255,0.05)] flex items-center justify-center mb-5 text-2xl ring-1 ring-black/50">
       🔍
     </div>
-    <p className="text-[var(--text-secondary)] text-sm">{message}</p>
+    <p className="text-[var(--text-secondary)] text-[15px] max-w-sm">{message}</p>
   </div>
 );
 
@@ -105,12 +105,12 @@ const FeedPage = () => {
 
       <main className="max-w-6xl mx-auto px-4 py-6">
         {/* Page heading */}
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+        <div className="mb-8">
+          <h1 className="text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">
             Interview Experiences
           </h1>
-          <p className="text-[var(--text-secondary)] text-sm mt-1">
-            Real stories from real candidates
+          <p className="text-[var(--text-secondary)] text-[15px] mt-1.5 font-medium">
+            Real stories from real candidates.
           </p>
         </div>
 
@@ -127,7 +127,7 @@ const FeedPage = () => {
               placeholder="Search by company, role, or tag…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm text-[var(--text-primary)] placeholder-[var(--text-secondary)]/60 outline-none focus:border-[var(--indigo)] transition-colors"
+              className="w-full pl-9 pr-4 py-2.5 bg-zinc-900/50 border border-[var(--border)] rounded-xl text-[14px] font-medium text-[var(--text-primary)] placeholder-[var(--text-secondary)]/50 outline-none focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-200 shadow-sm"
             />
             {search && (
               <button
@@ -143,7 +143,7 @@ const FeedPage = () => {
           <select
             value={filters.sort}
             onChange={(e) => setFilters((p) => ({ ...p, sort: e.target.value }))}
-            className="px-3 py-2.5 bg-[var(--bg-card)] border border-[var(--border)] rounded-xl text-sm text-[var(--text-primary)] outline-none focus:border-[var(--indigo)] transition-colors"
+            className="px-3.5 py-2.5 bg-zinc-900/50 border border-[var(--border)] rounded-xl text-[14px] font-medium text-[var(--text-primary)] outline-none focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-200 shadow-sm appearance-none min-w-[120px]"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -155,10 +155,10 @@ const FeedPage = () => {
           {/* Filter toggle */}
           <button
             onClick={() => setShowFilters((v) => !v)}
-            className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-[14px] font-medium transition-all duration-200 shadow-sm ${
               showFilters || activeFilterCount > 0
-                ? "border-[var(--indigo)] text-[var(--indigo-light)] bg-[var(--indigo)]/10"
-                : "border-[var(--border)] text-[var(--text-secondary)] bg-[var(--bg-card)] hover:border-[var(--indigo)]"
+                ? "border-indigo-500/40 text-[var(--indigo-light)] bg-indigo-500/10 ring-4 ring-indigo-500/10"
+                : "border-[var(--border)] text-[var(--text-secondary)] bg-zinc-900/50 hover:border-zinc-600 focus:ring-4 focus:ring-zinc-500/10"
             }`}
           >
             <SlidersHorizontal size={15} />
@@ -184,10 +184,10 @@ const FeedPage = () => {
                   <button
                     key={d}
                     onClick={() => handleFilterChange("difficulty", d)}
-                    className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
+                    className={`px-3.5 py-1.5 rounded-full text-[12px] font-semibold border transition-all duration-200 ${
                       filters.difficulty === d
-                        ? "border-[var(--indigo)] bg-[var(--indigo)]/15 text-[var(--indigo-light)]"
-                        : "border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--indigo)]"
+                        ? "border-indigo-500/50 bg-indigo-500/15 text-[var(--indigo-light)] ring-2 ring-indigo-500/20"
+                        : "border-[var(--border)] text-[var(--text-secondary)] hover:border-zinc-500 hover:text-[var(--text-primary)] bg-zinc-900/30"
                     }`}
                   >
                     {d.charAt(0).toUpperCase() + d.slice(1)}
@@ -206,10 +206,10 @@ const FeedPage = () => {
                   <button
                     key={r}
                     onClick={() => handleFilterChange("result", r)}
-                    className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
+                    className={`px-3.5 py-1.5 rounded-full text-[12px] font-semibold border transition-all duration-200 ${
                       filters.result === r
-                        ? "border-[var(--indigo)] bg-[var(--indigo)]/15 text-[var(--indigo-light)]"
-                        : "border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--indigo)]"
+                        ? "border-indigo-500/50 bg-indigo-500/15 text-[var(--indigo-light)] ring-2 ring-indigo-500/20"
+                        : "border-[var(--border)] text-[var(--text-secondary)] hover:border-zinc-500 hover:text-[var(--text-primary)] bg-zinc-900/30"
                     }`}
                   >
                     {r.charAt(0).toUpperCase() + r.slice(1)}
@@ -228,10 +228,10 @@ const FeedPage = () => {
                   <button
                     key={t}
                     onClick={() => handleFilterChange("experienceType", t)}
-                    className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
+                    className={`px-3.5 py-1.5 rounded-full text-[12px] font-semibold border transition-all duration-200 ${
                       filters.experienceType === t
-                        ? "border-[var(--indigo)] bg-[var(--indigo)]/15 text-[var(--indigo-light)]"
-                        : "border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--indigo)]"
+                        ? "border-indigo-500/50 bg-indigo-500/15 text-[var(--indigo-light)] ring-2 ring-indigo-500/20"
+                        : "border-[var(--border)] text-[var(--text-secondary)] hover:border-zinc-500 hover:text-[var(--text-primary)] bg-zinc-900/30"
                     }`}
                   >
                     {t}
@@ -250,7 +250,7 @@ const FeedPage = () => {
                 onChange={(e) =>
                   setFilters((p) => ({ ...p, company: e.target.value }))
                 }
-                className="px-3 py-1.5 bg-[var(--bg-primary)] border border-[var(--border)] rounded-xl text-sm text-[var(--text-primary)] outline-none focus:border-[var(--indigo)] transition-colors"
+                className="px-3.5 py-2 w-full bg-zinc-900/50 border border-[var(--border)] rounded-xl text-[13px] font-medium text-[var(--text-primary)] outline-none focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-200 appearance-none max-w-xs"
               >
                 <option value="">All companies</option>
                 {COMPANIES.map((c) => (
@@ -310,10 +310,10 @@ const FeedPage = () => {
                     <button
                       key={p}
                       onClick={() => fetchExperiences(p)}
-                      className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
+                      className={`w-9 h-9 rounded-xl text-[13px] font-bold transition-all duration-200 ${
                         p === pagination.page
-                          ? "bg-[var(--indigo)] text-white"
-                          : "bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border)]"
+                          ? "bg-[var(--indigo)] text-white shadow-md shadow-indigo-500/25 ring-2 ring-indigo-500/30 ring-offset-2 ring-offset-[var(--bg-primary)]"
+                          : "bg-zinc-900/50 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-zinc-800 border border-[var(--border)]"
                       }`}
                     >
                       {p}
