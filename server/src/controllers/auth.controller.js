@@ -101,7 +101,11 @@ const register = async (req, res) => {
       emailVerificationExpires: verificationExpires,
     });
 
-    await sendVerificationEmail(email, verificationToken);
+    // Run email verification in the background without awaiting it.
+    // Render free tier blocks outbound SMTP. If we await this, the request will hang indefinitely.
+    sendVerificationEmail(email, verificationToken).catch((err) =>
+      console.error("Background email failed (Render SMTP block):", err.message)
+    );
 
     return res.status(201).json(
       new ApiResponse(
@@ -161,12 +165,16 @@ const login = async (req, res) => {
     if (!user)
       return res.status(401).json(new ApiResponse(401, "Invalid credentials"));
 
+    // [PORTFOLIO FIX]: Render free tier blocks outbound SMTP ports, meaning emails will hang and users can't verify.
+    // We bypass this check so recruiters and guests can successfully log in immediately!
+    /*
     if (!user.isVerified)
       return res
         .status(403)
         .json(
           new ApiResponse(403, "Please verify your email before logging in"),
         );
+    */
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
