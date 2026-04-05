@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   ThumbsUp,
   ThumbsDown,
@@ -11,8 +11,12 @@ import {
 } from "lucide-react";
 import { DIFFICULTY_COLORS, RESULT_COLORS } from "../utils/constants.js";
 import { formatDistanceToNow } from "../utils/dateUtils.js";
+import useAuth from "../hooks/useAuth.js";
 
 const ExperienceCard = ({ experience, onBookmark, isBookmarked }) => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  
   const {
     _id,
     company,
@@ -29,10 +33,18 @@ const ExperienceCard = ({ experience, onBookmark, isBookmarked }) => {
     createdAt,
   } = experience;
 
+  const hasUpvoted = user && upvotes.includes(user._id);
+  const hasDownvoted = user && downvotes.includes(user._id);
 
+  const handleCardClick = () => {
+    navigate(`/experience/${_id}`);
+  };
 
   return (
-    <article className="group relative bg-[var(--bg-primary)] border border-[var(--border)] rounded-[20px] p-5 hover:bg-[var(--bg-card)] transition-all duration-300 flex flex-col gap-3.5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:-translate-y-1 hover:border-[var(--border-hover)] ring-1 ring-inset ring-white/5 overflow-hidden">
+    <article 
+      onClick={handleCardClick}
+      className="group relative bg-[var(--bg-primary)] border border-[var(--border)] rounded-[20px] p-5 hover:bg-[var(--bg-card)] transition-all duration-300 flex flex-col gap-3.5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:-translate-y-1 hover:border-[var(--border-hover)] ring-1 ring-inset ring-white/5 overflow-hidden cursor-pointer"
+    >
       {/* Background radial gradient on hover */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-[radial-gradient(ellipse_at_top_right,_var(--indigo-glow),_transparent_50%)] pointer-events-none transition-opacity duration-300"></div>
 
@@ -57,7 +69,10 @@ const ExperienceCard = ({ experience, onBookmark, isBookmarked }) => {
         {/* Bookmark */}
         {onBookmark && (
           <button
-            onClick={() => onBookmark(_id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onBookmark(_id);
+            }}
             className={`p-2 rounded-xl transition-all duration-200 shrink-0 z-10 hover:scale-110 active:scale-95 ${
               isBookmarked
                 ? "text-[var(--indigo-light)] bg-[var(--indigo)]/15 shadow-[inset_0_0_8px_rgba(99,102,241,0.2)] ring-1 ring-[var(--indigo)]/30"
@@ -70,7 +85,7 @@ const ExperienceCard = ({ experience, onBookmark, isBookmarked }) => {
       </div>
 
       {/* Badges */}
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-1.5 z-10">
         {difficulty && (
           <span
             className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold border tracking-wide uppercase shadow-sm ${DIFFICULTY_COLORS[difficulty]}`}
@@ -93,22 +108,22 @@ const ExperienceCard = ({ experience, onBookmark, isBookmarked }) => {
       </div>
 
       {/* Excerpt */}
-      <Link to={`/experience/${_id}`} className="block mt-1 z-10">
+      <div className="block mt-1 z-10">
         <p className="text-[var(--text-secondary)] text-[14px] leading-[1.6] line-clamp-2 group-hover:text-zinc-300 transition-colors">
           {content}
         </p>
-      </Link>
+      </div>
 
       {/* Footer */}
       <div className="flex items-center justify-between pt-3 border-t border-[var(--border)]/50 mt-auto z-10">
         {/* Stats */}
         <div className="flex items-center gap-3.5 text-[var(--text-secondary)] text-[13px] font-medium">
-          <span className="flex items-center gap-1.5 hover:text-green-400 transition-colors">
-            <ThumbsUp size={14} strokeWidth={1.5} />
+          <span className={`flex items-center gap-1.5 transition-colors ${hasUpvoted ? "text-green-400 font-bold drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]" : "hover:text-green-400"}`}>
+            <ThumbsUp size={14} strokeWidth={hasUpvoted ? 2.5 : 1.5} />
             {upvotes.length}
           </span>
-          <span className="flex items-center gap-1.5 hover:text-red-400 transition-colors">
-            <ThumbsDown size={14} strokeWidth={1.5} />
+          <span className={`flex items-center gap-1.5 transition-colors ${hasDownvoted ? "text-red-400 font-bold drop-shadow-[0_0_8px_rgba(248,113,113,0.5)]" : "hover:text-red-400"}`}>
+            <ThumbsDown size={14} strokeWidth={hasDownvoted ? 2.5 : 1.5} />
             {downvotes.length}
           </span>
           <span className="flex items-center gap-1.5">
@@ -137,4 +152,4 @@ const ExperienceCard = ({ experience, onBookmark, isBookmarked }) => {
   );
 };
 
-export default ExperienceCard;
+export default ExperienceCard;;

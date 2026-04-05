@@ -47,8 +47,7 @@ const getAllExperiences = async (req, res) => {
       .sort(sortOption)
       .skip(skip)
       .limit(Number(limit))
-      .populate("author", "name avatar")
-      .select("-comments");
+      .populate("author", "name avatar");
 
     return res.status(200).json(
       new ApiResponse(200, "Experiences fetched", {
@@ -70,7 +69,6 @@ const getTrendingExperiences = async (req, res) => {
   try {
     const experiences = await Experience.find()
       .populate("author", "name avatar")
-      .select("-comments")
       .lean();
 
     const now = Date.now();
@@ -335,8 +333,7 @@ const toggleBookmark = async (req, res) => {
 const getMyExperiences = async (req, res) => {
   const experiences = await Experience.find({ author: req.user._id })
     .sort({ createdAt: -1 })
-    .populate("author", "name avatar")
-    .select("-comments");
+    .populate("author", "name avatar");
   res.json(new ApiResponse(200, "My experiences", { experiences }));
 };
 
